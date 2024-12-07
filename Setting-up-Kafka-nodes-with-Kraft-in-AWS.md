@@ -4,7 +4,7 @@
 
     - 3 EC2 instances, t2.medium, Ubuntu 22.04
     - Kafka 3.9.0 for scala 2.13
-    
+
 Download the kafka 3.9.0 package - https://kafka.apache.org/downloads
 
 ## Setting up infra
@@ -46,14 +46,15 @@ Kraft mode requires a cluster uuid. You can create one by running the command:
 Save the uuid for later.
 
 ### 2. Configure Kraft server.properties
-First, note the private IP of each node. Then, with your preferred editor edit **/etc/kafka/config/kraft/server.properties**.
+First, note the private IP of each node. Then, with your preferred editor edit **`/etc/kafka/config/kraft/server.properties`**.
 
-The properety **node_id** should be unique and incremental for each node. make sure to associate the IP of each node with its ID. It’s required for the **controller.quorum.voters** property.
+The properety **`node_id`** should be unique and incremental for each node. make sure to associate the IP of each node with its ID. It’s required for the **`controller.quorum.voters`** property.
 
 **Note:**
 1) node-1-private-ip = 172.31.43.210
 2) node-2-private-ip = 172.31.47.170
 3) node-3-private-ip = 172.31.36.217
+
 ```sh
 # pass the values kafka-node-1 configuration file - /etc/kafka/config/kraft/server.properties
 node.id=1
@@ -64,6 +65,8 @@ advertised.listeners=PLAINTEXT://172.31.43.210:9092
 controller.listener.names=CONTROLLER
 log.dirs=/data/kraft-combined-logs
 listener.security.protocol.map=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
+log.retention.hours=-1
+log.retention.bytes=-1
 ```
 ```sh
 # pass the values kafka-node-2 configuration file - /etc/kafka/config/kraft/server.properties
@@ -75,6 +78,8 @@ advertised.listeners=PLAINTEXT://172.31.47.170:9092
 controller.listener.names=CONTROLLER
 log.dirs=/data/kraft-combined-logs
 listener.security.protocol.map=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
+log.retention.hours=-1
+log.retention.bytes=-1
 ```
 ```sh
 # pass the values kafka-node-3 configuration file - /etc/kafka/config/kraft/server.properties
@@ -86,10 +91,12 @@ advertised.listeners=PLAINTEXT://172.31.36.217:9092
 controller.listener.names=CONTROLLER
 log.dirs=/data/kraft-combined-logs
 listener.security.protocol.map=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
+log.retention.hours=-1
+log.retention.bytes=-1
 ```
 ### 3. Configure Kafka systemd service
 
-Create a systemd service file at **/etc/systemd/system/kafka.service** for each node. This step requires the cluster UUID - **ftpUeuPCQOWiqpcnG8Mqag** that was created earlier.
+Create a systemd service file at **`/etc/systemd/system/kafka.service`** for each node. This step requires the cluster UUID - **`ftpUeuPCQOWiqpcnG8Mqag`** that was created earlier.
 ```sh
 [Unit]
 Requires=network.target
@@ -119,16 +126,21 @@ sudo systemctl start kafka.service
 sudo systemctl status kafka.service
 ```
 ## Testing and implementation
-### 1. Create your first topic
-```
+### 1. Topic
+```md
+# Create the topic
 /etc/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --topic quick-events-1 --create --partitions 2 --replication-factor 2
 Created topic messages.
+
+# List the topics
+/etc/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --topic quick-events-1 --list
 ```
 ### 2. Insert the messages
 ```
-/etc/kafka/bin/kafka-console-producer.sh --topic quick-events-1 --bootstrap-server 172.31.43.210:9092 172.31.47.170:9092 172.31.36.217:9092
+/etc/kafka/bin/kafka-console-producer.sh --topic quick-events-1 --bootstrap-server 172.31.43.210:9092,172.31.47.170:9092,172.31.36.217:9092
 ```
-### 3. Store the messages
+### 3. List the messages from beginning itself
 ```
-/etc/kafka/bin/kafka-console-consumer.sh --topic quick-events-1 --bootstrap-server  172.31.43.210:9092,172.31.47.170:9092,172.31.36.217:9092
+/etc/kafka/bin/kafka-console-consumer.sh --topic quick-events-1 --bootstrap-server  172.31.43.210:9092,172.31.47.170:9092,172.31.36.217:9092 --from-beginning
 ```
+
