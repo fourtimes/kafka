@@ -146,5 +146,7 @@ Created topic messages.
 
 ---
 
-**REFERENCE** - https://medium.com/@vonschnappi/setting-up-kafka-with-kraft-in-aws-837310466591
+**REFERENCE** 
+- https://medium.com/@vonschnappi/setting-up-kafka-with-kraft-in-aws-837310466591
+- https://blog.codefarm.me/2024/01/12/install-kafka-with-kraft/
 
