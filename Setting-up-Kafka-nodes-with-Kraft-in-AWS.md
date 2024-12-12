@@ -55,7 +55,7 @@ The properety **`node_id`** should be unique and incremental for each node. make
 2) node-2-private-ip = 172.31.47.170
 3) node-3-private-ip = 172.31.36.217
 
-```sh
+```properties
 # pass the values kafka-node-1 configuration file - /etc/kafka/config/kraft/server.properties
 node.id=1
 controller.quorum.voters=1@172.31.43.210:9093,2@172.31.47.170:9093,3@172.31.36.217:9093
@@ -68,7 +68,7 @@ listener.security.protocol.map=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,SSL:SSL,
 log.retention.hours=-1
 log.retention.bytes=-1
 ```
-```sh
+```properties
 # pass the values kafka-node-2 configuration file - /etc/kafka/config/kraft/server.properties
 node.id=2
 controller.quorum.voters=1@172.31.43.210:9093,2@172.31.47.170:9093,3@172.31.36.217:9093
@@ -81,7 +81,7 @@ listener.security.protocol.map=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,SSL:SSL,
 log.retention.hours=-1
 log.retention.bytes=-1
 ```
-```sh
+```properties
 # pass the values kafka-node-3 configuration file - /etc/kafka/config/kraft/server.properties
 node.id=3
 controller.quorum.voters=1@172.31.43.210:9093,2@172.31.47.170:9093,3@172.31.36.217:9093
@@ -97,7 +97,7 @@ log.retention.bytes=-1
 ### 3. Configure Kafka systemd service
 
 Create a systemd service file at **`/etc/systemd/system/kafka.service`** for each node. This step requires the cluster UUID - **`ftpUeuPCQOWiqpcnG8Mqag`** that was created earlier.
-```sh
+```service
 [Unit]
 Requires=network.target
 After=network.target
