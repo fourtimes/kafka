@@ -144,3 +144,7 @@ Created topic messages.
 /etc/kafka/bin/kafka-console-consumer.sh --topic quick-events-1 --bootstrap-server  172.31.43.210:9092,172.31.47.170:9092,172.31.36.217:9092 --from-beginning
 ```
 
+---
+
+**REFERENCE** - https://medium.com/@vonschnappi/setting-up-kafka-with-kraft-in-aws-837310466591
+
