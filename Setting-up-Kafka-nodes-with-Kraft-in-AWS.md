@@ -34,6 +34,7 @@ sudo chown -R kafka:kafka /var/log/kafka
 
 # download and extract kafka
 wget https://downloads.apache.org/kafka/3.9.0/kafka_2.13-3.9.0.tgz
+sudo mv kafka_2.13-3.9.0.tgz /etc/kafka
 sudo tar -xzvf /etc/kafka/kafka_2.13-3.9.0.tgz -C /etc/kafka --strip 1
 sudo chown -R kafka:kafka /etc/kafka
 ```
