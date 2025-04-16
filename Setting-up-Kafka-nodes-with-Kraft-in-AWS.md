@@ -134,6 +134,7 @@ sudo systemctl status kafka.service
 Created topic messages.
 
 # List the topics
+/etc/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
 /etc/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --topic quick-events-1 --list
 ```
 ### 2. Insert the messages
