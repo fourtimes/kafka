@@ -1,5 +1,4 @@
-```markdown
-## Kafka Single Node Installation and Configuration
+## Kafka Single Node Installation and Configuration for ubuntu
 
 ### Prerequisites
 
@@ -92,7 +91,7 @@
     sudo systemctl status kafka
     ```
 
-    If the service fails to start, check the logs:
+    If the kafka service fails to start, check the logs:
 
     ```bash
     sudo journalctl -u kafka.service -e
@@ -123,4 +122,3 @@
     ```bash
     /opt/kafka/bin/kafka-console-consumer.sh --topic test-topic --from-beginning --bootstrap-server localhost:9092
     ```
-```
