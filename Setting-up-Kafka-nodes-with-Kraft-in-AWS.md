@@ -1,5 +1,4 @@
-# Kafka Kraft Setup on AWS
-
+# Kafka Cluster Installation and Configuration for Ubuntu (Kraft Mode)
 This document outlines the steps to set up a Kafka cluster using Kraft mode on AWS.
 
 ## Prerequisites
