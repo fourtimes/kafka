@@ -50,6 +50,17 @@ Save this UUID.
 
 ### 2. Configure `server.properties`
 
+
+Edit `/opt/kafka/config/kraft/server.properties` on each node.  Pay close attention to the following properties, adjusting them for each node:
+
+*   `node.id`:  A unique integer for each node in the cluster (e.g., 1, 2, 3).
+*   `controller.quorum.voters`: A comma-separated list of node IDs and their corresponding host:port addresses for the controller quorum.  This should be the same on all nodes.  Example: `1@kafka1:9093,2@kafka2:9093,3@kafka3:9093`  (Replace `kafka1`, `kafka2`, `kafka3` with the actual hostnames or IP addresses of your servers).
+*   `listeners`:  The address that Kafka brokers bind to.  Use the hostname or IP address of the current node.  Example: `PLAINTEXT://kafka1:9092`
+*   `advertised.listeners`: The address that clients use to connect to the Kafka brokers.  Use the hostname or IP address of the current node. Example: `PLAINTEXT://kafka1:9092`
+*   `controller.listener.names`: `controller`
+*   `inter.broker.listener.name`: `PLAINTEXT`
+
+
 **Note:**
 
     node-1-private-ip = 172.31.43.210
